@@ -4,30 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcc2627a-2df9-48e2-8a33-616e44951f79" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/back/controller/ai/ai.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/utils/openai.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/utils/openai_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/back/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/back/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/back/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/@element-plus_icons-vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/@element-plus_icons-vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/_metadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/axios.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/chunk-G3PMV62Z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/chunk-G3PMV62Z.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/element-plus.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/element-plus.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/spark-md5.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/spark-md5.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/streamsaver.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/streamsaver.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/vue-router.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/vue-router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/utils/request.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/FileList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/FileList.vue" afterDir="false" />
-    </list>
+    <list default="true" id="dcc2627a-2df9-48e2-8a33-616e44951f79" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
