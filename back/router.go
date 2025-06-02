@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"netdisk/controller/ai"
 	"netdisk/controller/alive"
 	"netdisk/controller/file"
 	"netdisk/controller/user"
@@ -34,6 +35,9 @@ func RegisterRouter(r *gin.Engine) {
 			fileGroup.POST("/mkdir", file.MakeDir())
 			fileGroup.POST("/remove", file.Remove())
 		}
-
+		aiGroup := authApi.Group("/ai")
+		{
+			aiGroup.POST("/chat", ai.ChatAI())
+		}
 	}
 }

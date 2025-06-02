@@ -2,13 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import FileList from '../views/FileList.vue'
+import AiChat from '../views/AiChat.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/files'
     },
     {
       path: '/login',
@@ -24,6 +25,12 @@ const router = createRouter({
       path: '/files',
       name: 'files',
       component: FileList,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/ai-chat',
+      name: 'ai-chat',
+      component: AiChat,
       meta: { requiresAuth: true }
     }
   ]

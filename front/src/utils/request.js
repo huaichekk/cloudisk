@@ -5,7 +5,7 @@ import router from '../router'
 // 创建 axios 实例
 const request = axios.create({
     baseURL: '/api', // 使用相对路径，会被代理到后端服务器
-    timeout: 5000,
+    timeout: 30000, // 修改为 30 秒
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
@@ -18,6 +18,11 @@ request.interceptors.request.use(
         const token = localStorage.getItem('token')
         if (token) {
             config.headers['X-Token'] = token
+        }
+
+        // 如果是 AI 聊天接口，设置更长的超时时间
+        if (config.url === '/ai/chat') {
+            config.timeout = 60000 // AI 聊天接口使用 60 秒超时
         }
 
         // 如果是 FormData，删除 Content-Type，让浏览器自动设置
@@ -39,11 +44,11 @@ request.interceptors.request.use(
 request.interceptors.response.use(
     response => {
         const res = response.data
-        if (res.code === 200) {
+        if (res.code === 0 || res.code === 200) {
             return res
         } else {
-            ElMessage.error(res.message || '请求失败')
-            return Promise.reject(new Error(res.message || '请求失败'))
+            ElMessage.error(res.msg || '请求失败')
+            return Promise.reject(new Error(res.msg || '请求失败'))
         }
     },
     error => {
@@ -64,7 +69,7 @@ request.interceptors.response.use(
                     ElMessage.error('服务器错误')
                     break
                 default:
-                    ElMessage.error(error.response.data?.message || '请求失败')
+                    ElMessage.error(error.response.data?.msg || '请求失败')
             }
         } else {
             ElMessage.error('网络错误，请检查您的网络连接')

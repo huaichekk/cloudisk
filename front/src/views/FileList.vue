@@ -6,8 +6,14 @@
         <span class="navbar-title">Cloudisk 网盘系统</span>
       </div>
       <div class="navbar-right">
-        <span class="navbar-user">{{ username }}</span>
-        <el-button type="text" class="navbar-logout" @click="handleLogout">退出</el-button>
+        <div class="user-info">
+          <el-avatar :size="32" :icon="UserFilled" class="user-avatar" />
+          <span class="navbar-user">{{ username }}</span>
+        </div>
+        <el-button type="primary" class="navbar-logout" @click="handleLogout">
+          <el-icon><SwitchButton /></el-icon>
+          <span>退出登录</span>
+        </el-button>
       </div>
     </div>
     <div class="main-layout">
@@ -19,11 +25,15 @@
           </div>
           <div class="sidebar-menu-item" :class="{active: currentView==='transfer'}" @click="currentView='transfer'">
             <el-icon><UploadFilled /></el-icon>
-            <span>传输管理</span>
+            <span>上传管理</span>
           </div>
           <div class="sidebar-menu-item" :class="{active: currentView==='download'}" @click="currentView='download'">
             <el-icon><Download /></el-icon>
             <span>下载管理</span>
+          </div>
+          <div class="sidebar-menu-item" :class="{active: currentView==='ai-chat'}" @click="currentView='ai-chat'">
+            <el-icon><ChatDotRound /></el-icon>
+            <span>文件助手</span>
           </div>
           <div class="sidebar-menu-item" :class="{active: currentView==='recycle'}" @click="currentView='recycle'">
             <el-icon><Delete /></el-icon>
@@ -159,6 +169,61 @@
             </div>
           </div>
         </div>
+        <div v-else-if="currentView==='ai-chat'" class="chat-content">
+          <!-- 聊天窗口 -->
+          <div class="chat-window">
+            <!-- 消息列表 -->
+            <div class="message-list" ref="messageList">
+              <div v-for="(msg, index) in messages" :key="index" 
+                   :class="['message', msg.type === 'user' ? 'user-message' : 'ai-message']">
+                <div class="message-avatar">
+                  <el-avatar :size="40" :icon="msg.type === 'user' ? UserFilled : Service" />
+                </div>
+                <div class="message-content">
+                  <div class="message-text" v-if="msg.type === 'user'">{{ msg.content }}</div>
+                  <div class="message-text markdown-body" v-else v-html="renderMarkdown(msg.content)"></div>
+                  <div class="message-time">{{ msg.time }}</div>
+                </div>
+              </div>
+              <!-- 加载状态 -->
+              <div v-if="loading" class="message ai-message loading-message">
+                <div class="message-avatar">
+                  <el-avatar :size="40" :icon="Service" />
+                </div>
+                <div class="message-content">
+                  <div class="message-text loading-text">
+                    <span class="loading-dot"></span>
+                    <span class="loading-dot"></span>
+                    <span class="loading-dot"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 输入区域 -->
+            <div class="input-area">
+              <el-input
+                v-model="inputMessage"
+                type="textarea"
+                :rows="3"
+                placeholder="请输入您的问题..."
+                @keyup.enter.ctrl="sendMessage"
+                :disabled="loading"
+              />
+              <div class="input-actions">
+                <span class="tip">按 Ctrl + Enter 发送</span>
+                <el-button 
+                  type="primary" 
+                  :loading="loading"
+                  @click="sendMessage"
+                  :disabled="loading"
+                >
+                  {{ loading ? '思考中...' : '发送' }}
+                </el-button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div v-else class="coming-soon">敬请期待...</div>
       </div>
     </div>
@@ -166,13 +231,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Folder, Document, Delete, Setting, UploadFilled, Download } from '@element-plus/icons-vue'
+import { Folder, Document, Delete, Setting, UploadFilled, Download, ChatDotRound, UserFilled, Service, SwitchButton } from '@element-plus/icons-vue'
 import request from '../utils/request'
 import SparkMD5 from 'spark-md5'
 import axios from 'axios'
+import { marked } from 'marked'
+import DOMPurify from 'dompurify'
 
 const route = useRoute()
 const router = useRouter()
@@ -790,6 +857,80 @@ async function handleMkdir() {
     // 错误提示已由拦截器处理
   }
 }
+
+// AI 聊天相关
+const messages = ref([])
+const inputMessage = ref('')
+const loading = ref(false)
+const messageList = ref(null)
+
+// 渲染 Markdown
+const renderMarkdown = (content) => {
+  return DOMPurify.sanitize(marked(content))
+}
+
+// 发送消息
+const sendMessage = async () => {
+  if (!inputMessage.value.trim()) {
+    ElMessage.warning('请输入消息内容')
+    return
+  }
+
+  // 添加用户消息
+  const userMessage = {
+    type: 'user',
+    content: inputMessage.value,
+    time: new Date().toLocaleTimeString()
+  }
+  messages.value.push(userMessage)
+  
+  // 清空输入框
+  const message = inputMessage.value
+  inputMessage.value = ''
+  
+  // 滚动到底部
+  await nextTick()
+  scrollToBottom()
+  
+  try {
+    loading.value = true
+    console.log('正在发送消息:', message) // 添加日志
+    const response = await request.post('/ai/chat', {
+      message: message
+    })
+    console.log('收到响应:', response) // 添加日志
+    
+    if (response.code === 200) {
+      // 添加 AI 回复
+      messages.value.push({
+        type: 'ai',
+        content: response.data.message,
+        time: new Date().toLocaleTimeString()
+      })
+    } else {
+      ElMessage.error(response.msg || '请求失败')
+    }
+  } catch (error) {
+    console.error('发送消息失败:', error)
+    ElMessage.error('发送消息失败')
+  } finally {
+    loading.value = false
+    await nextTick()
+    scrollToBottom()
+  }
+}
+
+// 滚动到底部
+const scrollToBottom = () => {
+  if (messageList.value) {
+    messageList.value.scrollTop = messageList.value.scrollHeight
+  }
+}
+
+// 组件挂载时滚动到底部
+onMounted(() => {
+  scrollToBottom()
+})
 </script>
 
 <style scoped>
@@ -810,12 +951,114 @@ async function handleMkdir() {
   width: 100vw;
   height: 64px;
   background: #fff;
-  box-shadow: 0 2px 8px 0 rgba(30,60,114,0.06);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 48px;
+  padding: 0 32px;
   z-index: 10;
+  position: relative;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar-logo {
+  height: 36px;
+  transition: transform 0.3s ease;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.05);
+}
+
+.navbar-title {
+  font-size: 20px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.5px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: #f5f7fa;
+  transition: all 0.3s ease;
+}
+
+.user-info:hover {
+  background: #e4e7eb;
+}
+
+.user-avatar {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: #fff;
+}
+
+.navbar-user {
+  font-size: 14px;
+  color: #1e3c72;
+  font-weight: 500;
+}
+
+.navbar-logout {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.navbar-logout:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 60, 114, 0.2);
+}
+
+.navbar-logout .el-icon {
+  font-size: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0 16px;
+  }
+  
+  .navbar-title {
+    font-size: 18px;
+  }
+  
+  .navbar-user {
+    display: none;
+  }
+  
+  .navbar-logout span {
+    display: none;
+  }
+  
+  .navbar-logout {
+    padding: 8px;
+  }
 }
 
 .main-layout {
@@ -1115,5 +1358,248 @@ async function handleMkdir() {
   align-items: center;
   margin-bottom: 16px;
   gap: 12px;
+}
+
+/* AI 聊天相关样式 */
+.chat-content {
+  width: 100%;
+  max-width: 900px;
+  padding: 32px;
+}
+
+.chat-window {
+  width: 100%;
+  height: calc(100vh - 128px);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 24px;
+  animation: fadeIn 0.3s ease;
+}
+
+.message-avatar {
+  margin-right: 12px;
+}
+
+.message-content {
+  max-width: 80%;
+}
+
+.message-text {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.message-time {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.user-message {
+  flex-direction: row-reverse;
+}
+
+.user-message .message-avatar {
+  margin-right: 0;
+  margin-left: 12px;
+}
+
+.user-message .message-text {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: #fff;
+}
+
+.ai-message .message-text {
+  background: #f5f7fa;
+  color: #1e3c72;
+}
+
+/* Markdown 样式 */
+.markdown-body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 { font-size: 2em; }
+.markdown-body h2 { font-size: 1.5em; }
+.markdown-body h3 { font-size: 1.25em; }
+.markdown-body h4 { font-size: 1em; }
+.markdown-body h5 { font-size: 0.875em; }
+.markdown-body h6 { font-size: 0.85em; }
+
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding-left: 2em;
+}
+
+.markdown-body li {
+  margin-top: 0.25em;
+}
+
+.markdown-body code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 3px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+
+.markdown-body blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+  margin: 0 0 16px 0;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body em {
+  font-style: italic;
+}
+
+.input-area {
+  padding: 24px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.input-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.tip {
+  font-size: 12px;
+  color: #999;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .chat-content {
+    padding: 16px;
+  }
+  
+  .chat-window {
+    height: calc(100vh - 96px);
+  }
+  
+  .message-list {
+    padding: 16px;
+  }
+  
+  .input-area {
+    padding: 16px;
+  }
+}
+
+/* 加载状态样式 */
+.loading-message {
+  opacity: 0.8;
+}
+
+.loading-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 60px;
+}
+
+.loading-dot {
+  width: 8px;
+  height: 8px;
+  background: #1e3c72;
+  border-radius: 50%;
+  animation: loadingDot 1.4s infinite ease-in-out both;
+}
+
+.loading-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes loadingDot {
+  0%, 80%, 100% { 
+    transform: scale(0);
+  } 
+  40% { 
+    transform: scale(1.0);
+  }
+}
+
+/* 禁用状态样式 */
+:deep(.el-textarea.is-disabled .el-textarea__inner) {
+  background-color: #f5f7fa;
+  border-color: #e4e7ed;
+  color: #606266;
+  cursor: not-allowed;
+}
+
+:deep(.el-button.is-disabled) {
+  background: #a0cfff;
+  border-color: #a0cfff;
+  color: #fff;
+  cursor: not-allowed;
 }
 </style> 

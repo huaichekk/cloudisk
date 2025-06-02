@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dcc2627a-2df9-48e2-8a33-616e44951f79" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/back/controller/ai/ai.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/utils/openai.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/utils/openai_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/back/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/back/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/back/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/@element-plus_icons-vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/@element-plus_icons-vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/_metadata.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/axios.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/chunk-G3PMV62Z.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/chunk-G3PMV62Z.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/element-plus.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/element-plus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/spark-md5.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/spark-md5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/streamsaver.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/streamsaver.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/vue-router.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/vue-router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/node_modules/.vite/deps/vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/node_modules/.vite/deps/vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/utils/request.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/FileList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/FileList.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file://C:/06_code/gopath/pkg/mod/golang.org/toolchain@v0.0.1-go1.24.2.windows-amd64" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2xUE8jLGRtKD9BAuFNTSyxTXIcz" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "DefaultGoTemplateProperty": "Go File",
+    "Go 构建.go build netdisk.executor": "Run",
+    "Go 测试.netdisk/commen/redis 中的 TestGetRedis.executor": "Run",
+    "Go 测试.netdisk/utils 中的 TestChatMessage.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "C:/06_code/gopath/src/openai-test",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="RunManager" selected="Go 构建.go build netdisk">
+    <configuration name="go build netdisk" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="netdisk" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="netdisk" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build netdisk" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="netdisk" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="netdisk" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="netdisk/commen/redis 中的 TestGetRedis" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="netdisk" />
+      <working_directory value="$PROJECT_DIR$/commen/redis" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="netdisk/commen/redis" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestGetRedis\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="netdisk/utils 中的 TestChatMessage" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="netdisk" />
+      <working_directory value="$PROJECT_DIR$/back/utils" />
+      <root_directory value="$PROJECT_DIR$/back" />
+      <kind value="PACKAGE" />
+      <package value="netdisk/utils" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestChatMessage\E$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go 构建.go build netdisk" />
+        <item itemvalue="Go 测试.netdisk/utils 中的 TestChatMessage" />
+        <item itemvalue="Go 测试.netdisk/commen/redis 中的 TestGetRedis" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-gosdk-d297c17c1fbd-57c114c3cede-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-243.25659.52" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-GO-243.25659.52" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:vite" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:vue" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/controller/file/upload.go</url>
+          <line>39</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/back/controller/ai/ai.go</url>
+          <line>11</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
